@@ -74,7 +74,7 @@
       thisApp.initMenu();
     },
   };
-
+// Komentarz :) Dziękuje.
   app.init();
 
 }
