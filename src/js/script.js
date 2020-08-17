@@ -70,11 +70,15 @@
       console.log('classNames:', classNames);
       console.log('settings:', settings);
       console.log('templates:', templates);
-
+      thisApp.initData();
       thisApp.initMenu();
     },
   };
-// Komentarz :) Dziękuje.
+  initData: function(){
+    const thisApp = this;
+
+    thisApp.data = dataSource;
+    }
   app.init();
 
 }
