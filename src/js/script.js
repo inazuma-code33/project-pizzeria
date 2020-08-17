@@ -58,6 +58,8 @@
       console.log('new Product:', thisProduct);
     }
   }
+  const thisApp = this;
+  console.log('thisApp.data:');
   const app = {
     initMenu: function(){
       const testProduct = new Product();
