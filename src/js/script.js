@@ -52,24 +52,23 @@
   };
 
   class Product{
-    constructor(){
+    constructor(id, data){
       const thisProduct = this;
 
+      thisProduct.id = id;
+      thisProduct.data = data;
+      thisProduct.renderInMenu();
       console.log('new Product:', thisProduct);
+    }
+    renderInMenu(){
+      const thisProduct = this;
     }
   }
 
   const app = {
-    initMenu: function() {
-      const testProduct = new Product();
-      console.log('testProduct:', testProduct);
-    },
     init: function() {
       const thisApp = this;
-      console.log('thisApp.data:', thisApp.data);
-      for(let productData in thisApp.data.product){
-        new Product(productData, thisApp.data.product[productData]);
-      }
+
       console.log('*** App starting ***');
       console.log('thisApp:', thisApp);
       console.log('classNames:', classNames);
@@ -77,6 +76,15 @@
       console.log('templates:', templates);
       thisApp.initData();
       thisApp.initMenu();
+    },
+    initMenu: function() {
+      const thisApp = this;
+      console.log('thisApp.data:', thisApp.data);
+
+      for(let productData in thisApp.data.products){
+        console.log("TEST");
+        new Product(productData, thisApp.data.products[productData]);
+      }
     },
     initData: function() {
       const thisApp = this;
