@@ -63,13 +63,13 @@
     initMenu: function() {
       const testProduct = new Product();
       console.log('testProduct:', testProduct);
-      for(let productData in thisApp.data.product){
-        new Product(productData, thisApp.data.product[productData]);
-      }
     },
     init: function() {
       const thisApp = this;
       console.log('thisApp.data:', thisApp.data);
+      for(let productData in thisApp.data.product){
+        new Product(productData, thisApp.data.product[productData]);
+      }
       console.log('*** App starting ***');
       console.log('thisApp:', thisApp);
       console.log('classNames:', classNames);
