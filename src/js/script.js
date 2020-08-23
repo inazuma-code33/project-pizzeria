@@ -57,11 +57,21 @@
 
       thisProduct.id = id;
       thisProduct.data = data;
+
       thisProduct.renderInMenu();
+      
       console.log('new Product:', thisProduct);
-    }
+    },
     renderInMenu(){
       const thisProduct = this;
+
+      /* generate HTML based on tamplate */
+
+      /* create element using utlis.createElementFromHTML */
+
+      /* find menu container */
+
+      /* add element to menu */
     }
   }
 
@@ -82,7 +92,6 @@
       console.log('thisApp.data:', thisApp.data);
 
       for(let productData in thisApp.data.products){
-        console.log("TEST");
         new Product(productData, thisApp.data.products[productData]);
       }
     },
