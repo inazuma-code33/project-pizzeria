@@ -63,8 +63,8 @@
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
-      thisProduct.initAccordion();
       thisProduct.getElements();
+      thisProduct.initAccordion();
       thisProduct.initOrderFrom();
       thisProduct.processOrder();
 
@@ -97,9 +97,6 @@
     }
     initAccordion() {
       const thisProduct = this;
-  
-      /* find the clickable trigger (the element that should react to clicking) */
-      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
       /* START: click event listener to trigger */
   
       thisProduct.accordionTrigger.addEventListener('click', function (event) {
@@ -133,10 +130,24 @@
     initOrderFrom(){
       const thisProduct = this;
       console.log('orderFrom :' , thisProduct);
+      thisProduct.form.addEventListener('submit', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
+      
+      for(let input of thisProduct.formInputs){
+        input.addEventListener('change', function(){
+          thisProduct.processOrder();
+        });
+      }
+      
+      thisProduct.cartButton.addEventListener('click', function(event){
+        event.preventDefault();
+        thisProduct.processOrder();
+      });
     }
     processOrder(){
       const thisProduct = this;
-      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);
       thisProduct.params = {};
@@ -168,7 +179,7 @@
       /* END LOOP: for each paramId in thisProduct.data.params */
       }
       /* set the contents of thisProduct.priceElem to be the value of variable price */
-      thisProduct.priceElem.innerHTML = thisProduct.price;
+      thisProduct.priceElem.innerHTML = price;
       console.log(thisProduct.params);
     }
   }
