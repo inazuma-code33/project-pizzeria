@@ -178,13 +178,7 @@
 
       thisApp.data = dataSource;
       console.log('thisApp.data:', thisApp.data);
-
-      for(let productData in thisApp.data.products){
-        new Product (productData, thisApp.data.products[productData]);
-      }
     },
-    initMenu: function(){
-      
     initMenu: function(){
       const thisApp = this;
 
