@@ -123,11 +123,9 @@
           /* END LOOP: for each active product */
         }
         /* END: click event listener to trigger */
-      });
-    }
-  
-    initOrderFrom(){
-      const thisProduct = this;
+    ,
+    initOrderFrom(){;
+      const thisProduct = this;(
       console.log('orderFrom :' , thisProduct);
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
