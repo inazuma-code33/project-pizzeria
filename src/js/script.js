@@ -51,7 +51,7 @@
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
-  
+
   class Product{
     constructor ( id, data){
       const thisProduct = this;
@@ -69,21 +69,21 @@
     }
     renderInMenu() {
       const thisProduct = this;
-  
+
       /* generate HTML based on template */
       const generatedHTML = templates.menuProduct(thisProduct.data);
-  
+
       /* create element using utils.createElementFromHTML */
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
-  
+
       /* find menu container */
       const menuContainer = document.querySelector(select.containerOf.menu);
-  
+
       /* add element to menu */
       menuContainer.appendChild(thisProduct.element);
     }
 
-    
+
     getElements(){
       const thisProduct = this;
       thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
@@ -94,50 +94,51 @@
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
       thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
-    initAccordion() {
+    initAccordion(){
       const thisProduct = this;
       /* START: click event listener to trigger */
-  
       thisProduct.accordionTrigger.addEventListener('click', function (event) {
-  
+
         /* prevent default action for event */
         event.preventDefault();
-  
+
         /* toggle active class on element of thisProduct */
         thisProduct.element.classList.toggle('active');
-  
+
         /* find all active products */
         const activeProducts = document.querySelectorAll('.product.' + classNames.menuProduct.wrapperActive);
-  
+
         /* START LOOP: for each active product */
         for (const active of activeProducts) {
-  
+
           /* START: if the active product isn't the element of thisProduct */
           if (active != thisProduct.element) {
-  
+
             /* remove class active for the active product */
             active.classList.remove(classNames.menuProduct.wrapperActive);
           }
-            /* END: if the active product isn't the element of thisProduct */
-          }
-          /* END LOOP: for each active product */
+          /* END: if the active product isn't the element of thisProduct */
         }
+        /* END LOOP: for each active product */
+      }
         /* END: click event listener to trigger */
-    ,
-    initOrderFrom(){;
-      const thisProduct = this;(
+      );
+    }
+
+    initOrderFrom(){
+      const thisProduct = this;
       console.log('orderFrom :' , thisProduct);
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
         thisProduct.processOrder();
       });
-      
+
       for(let input of thisProduct.formInputs){
         input.addEventListener('change', function(){
           thisProduct.processOrder();
         });
       }
-      
+
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
@@ -189,25 +190,24 @@
               image.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
-
+        }
         /* END LOOP: for each optionId in param.options */
-        
+
       /* END LOOP: for each paramId in thisProduct.data.params */
       }
       /* set the contents of thisProduct.priceElem to be the value of variable price */
       thisProduct.priceElem.innerHTML = price;
       console.log(thisProduct.params);
     }
-    initAmountWidget();{
+    initAmountWidget(){
       const thisProduct = this;
-      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      thisProduct.amountWidget = new amountWidget (thisProduct.amountWidgetElem);
 
       thisProduct.amountWidgetElem.addEventListener('updated', function () {
         thisProduct.processOrder();
       });
     }
   }
-
   const app = {
     initData: function(){
       const thisApp = this;
@@ -233,6 +233,23 @@
       thisApp.initMenu();
     },
   };
+}
+  class amountWidget{
+    constructor(element){
+      const thisWidget = this;
+
+      getElements(element){
+        const thisWidget = this;
+
+        thisWidget.element = element;
+        thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+        thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+        thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+      }
+      thisWidget.getElements(element);
+      console.log("AmountWidget:", thisWidget);
+      console.log("constructor arguments:", element);
+    }
 
   app.init();
-  )
+}
