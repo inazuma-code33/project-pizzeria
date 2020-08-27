@@ -1,9 +1,5 @@
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 
-//const { active } = require("browser-sync");
-
-//const { utils } = require("stySlelint");
-
 {
   'use strict';
 
@@ -66,6 +62,7 @@
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderFrom();
+      thisProduct.initAmountWidget();
       thisProduct.processOrder();
 
       console.log('new Product:', thisProduct);
@@ -94,6 +91,8 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
     initAccordion() {
       const thisProduct = this;
@@ -118,7 +117,7 @@
   
             /* remove class active for the active product */
             active.classList.remove(classNames.menuProduct.wrapperActive);
-  
+          }
             /* END: if the active product isn't the element of thisProduct */
           }
           /* END LOOP: for each active product */
@@ -146,7 +145,8 @@
         thisProduct.processOrder();
       });
     }
-    processOrder(){
+
+    processOrder() {
       const thisProduct = this;
       /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);
@@ -156,7 +156,7 @@
       /* START LOOP: for each paramId in thisProduct.data.params */
       for (let paramId in thisProduct.data.params) {
         /* save the element in thisProduct.data.params with key paramId as const param */
-        const param = thisProduct.data.params[paramId];    
+        const param = thisProduct.data.params[paramId];
         /* START LOOP: for each optionId in param.options */
         for (let optionId in param.options) {
           /* save the element in param.options with key optionId as const option */
@@ -171,18 +171,45 @@
           /* START ELSE IF: if option is not selected and option is default */
           else if (!optionSelected && option.default) {
             /* deduct price of option from price */
-            price = price - option.price;
+            price = price - option.price;}
           /* END ELSE IF: if option is not selected and option is default */
+          const images = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
+          if (optionSelected) {
+            if (!thisProduct.params[paramId]) {
+              thisProduct.params[paramId] = {
+                label: param.label,
+                options: {},
+              };
+            }
+            thisProduct.params[paramId].options[optionId] = option.label;
+            for (let image of images) {
+              image.classList.add(classNames.menuProduct.imageVisible);
+            }
+          } else {
+            /* remove class active from photo */
+            for (let image of images) {
+              image.classList.remove(classNames.menuProduct.imageVisible);
+            }
           }
+
         /* END LOOP: for each optionId in param.options */
-        }
+        
       /* END LOOP: for each paramId in thisProduct.data.params */
       }
       /* set the contents of thisProduct.priceElem to be the value of variable price */
       thisProduct.priceElem.innerHTML = price;
       console.log(thisProduct.params);
     }
+    initAmountWidget();{
+      const thisProduct = this;
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+
+      thisProduct.amountWidgetElem.addEventListener('updated', function () {
+        thisProduct.processOrder();
+      });
+    }
   }
+
   const app = {
     initData: function(){
       const thisApp = this;
@@ -210,4 +237,4 @@
   };
 
   app.init();
-}
+  )
