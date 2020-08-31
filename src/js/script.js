@@ -255,7 +255,9 @@
   };
 
   class setValue{
+
     setValue(value){
+      const thisWidget = this;
 
       const newValue = praslent(value);
 
@@ -264,7 +266,12 @@
       thisWidget.value = newValue;
       thisWidget.input.value = thisWidget.value;
     }
-  };
+    getElements(setValue) {
+      const thisWidget = setValue;
+
+      thisWidget.setValue(thisWidget.input.value);
+    }
+  }
 
   app.init();
 }
