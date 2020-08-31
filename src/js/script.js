@@ -254,5 +254,17 @@
     },
   };
 
+  class setValue{
+    setValue(value){
+
+      const newValue = praslent(value);
+
+      /* TODO: add validation */
+
+      thisWidget.value = newValue;
+      thisWidget.input.value = thisWidget.value;
+    }
+  };
+
   app.init();
 }
