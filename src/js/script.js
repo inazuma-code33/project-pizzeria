@@ -64,9 +64,8 @@
       thisProduct.initOrderFrom();
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
-
-      console.log('new Product:', thisProduct);
     }
+
     renderInMenu() {
       const thisProduct = this;
 
@@ -127,7 +126,6 @@
 
     initOrderFrom() {
       const thisProduct = this;
-      console.log('orderFrom :', thisProduct);
       thisProduct.form.addEventListener('submit', function (event) {
         event.preventDefault();
         thisProduct.processOrder();
@@ -197,9 +195,12 @@
         /* END LOOP: for each paramId in thisProduct.data.params */
       }
       /* set the contents of thisProduct.priceElem to be the value of variable price */
+
+      price *= thisProduct.amountWidget.value;
+
       thisProduct.priceElem.innerHTML = price;
-      console.log(thisProduct.params);
     }
+
     initAmountWidget() {
       const thisProduct = this;
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
@@ -208,6 +209,7 @@
         thisProduct.processOrder();
       });
     }
+
   }
 
   class AmountWidget {
@@ -215,27 +217,78 @@
       const thisWidget = this;
       thisWidget.getElements(element);
 
-      console.log('AmountWidget:', thisWidget);
-      console.log('constructor arguments', element);
+      thisWidget.value = settings.amountWidget.defaultValue;
+
+      thisWidget.setValue(thisWidget.input.value);
+
+      thisWidget.initActions();
     }
+
     setValue(value){
       const thisWidget = this;
 
-      const newValue = praslent(value);
+      const newValue = parseInt(value);
 
       /* TODO: add validation */
 
-      thisWidget.value = value;
+      if (!isNaN(value) && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax) {
+        thisWidget.value = newValue;
+        thisWidget.announce();
+      }
+
+
       thisWidget.input.value = thisWidget.value;
     }
+
     getElements(element) {
       const thisWidget = this;
-      
+
       thisWidget.element = element;
       thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
-      //thisWidget.setValue(thisWidget.input.value);
+    }
+
+    initActions() {
+      const thisWidget = this;
+
+      thisWidget.input.addEventListener('change', function() {
+        thisWidget.setValue(thisWidget.input.value);
+      });
+
+      thisWidget.linkDecrease.addEventListener('click', function() {
+        console.log('test');
+        thisWidget.setValue(--thisWidget.input.value);
+      });
+
+      thisWidget.linkIncrease.addEventListener('click', function() {
+        console.log('test2');
+        thisWidget.setValue(++thisWidget.input.value);
+      });
+
+    }
+
+    announce() {
+      const thisWidget = this;
+
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
+    }
+
+  }
+
+  class BaseWidget {
+
+    setValue(value) {
+      const thisWidget = this;
+      thisWidget.value = value;
+      // return this.value;
+    }
+
+    getElements(setValue) {
+      const thisWidget = setValue;
+
+      thisWidget.setValue(thisWidget.input.value);
     }
   }
 
@@ -244,7 +297,6 @@
       const thisApp = this;
 
       thisApp.data = dataSource;
-      console.log('thisApp.data:', thisApp.data);
     },
     initMenu: function () {
       const thisApp = this;
@@ -255,29 +307,10 @@
     },
     init: function () {
       const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
       thisApp.initData();
       thisApp.initMenu();
     },
   };
 
-  class BaseWidget {
-    setValue(value) {
-      const thisWidget = this;
-      thisWidget.value = value;
-      // return this.value;
-    }
-    getElements(setValue) {
-      const thisWidget = setValue;
-
-      thisWidget.setValue(thisWidget.input.value);
-    }
-  }
-
   app.init();
 }
-
