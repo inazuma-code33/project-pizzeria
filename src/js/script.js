@@ -6,6 +6,7 @@
   const select = {
     templateOf: {
       menuProduct: '#template-menu-product',
+      cartProduct: '#template-cart-product', // CODE ADDED
     },
     containerOf: {
       menu: '#product-list',
@@ -32,6 +33,8 @@
       },
     },
   };
+
+
 
   const classNames = {
     menuProduct: {
@@ -274,7 +277,6 @@
       const event = new Event('updated');
       thisWidget.element.dispatchEvent(event);
     }
-
   }
 
   class BaseWidget {
