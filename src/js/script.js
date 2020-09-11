@@ -310,7 +310,7 @@
     }
   }
 
-  class BaseWidget {
+  /*class BaseWidget {
 
     setValue(value) {
       const thisWidget = this;
@@ -323,7 +323,7 @@
 
       thisWidget.setValue(thisWidget.input.value);
     }
-  }
+  }*/
 
   class Cart{
     constructor(element){
@@ -340,11 +340,17 @@
 
       thisCart.dom = {};
       thisCart.dom.wrapper = element;
-
+      
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       //console.log('toggle trigger is: ', thisCart.dom.toggleTrigger); I tak nie wykazuje w konsoli.
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
 
+    }
+    initActions(){
+      const thisCart = this;
+      thisCart.dom.toggleTrigger.addEventListener('click', function(){
+        thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
+      });
     }
   }
 
@@ -366,6 +372,7 @@
       const thisApp = this;
       thisApp.initData();
       thisApp.initMenu();
+      thisApp.initCart();
     },
     initCart: function(){
       const thisApp = this;
@@ -373,13 +380,7 @@
       const cartElem = document.querySelector(select.containerOf.cart);
       thisApp.cart = new Cart(cartElem);
     },
-    initActions(){
-      const thisCart = this;
-      thisCart.dom.toggleTrigger.aadEventListener('click', function(){
-        thisCart.dom.wapper.classList.toggle(classNames.cart.wrapperActive);
-      });
-    }
   };
- 
+
   app.init();
 }
