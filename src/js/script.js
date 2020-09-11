@@ -332,7 +332,7 @@
 
       thisCart.getElements(element);
 
-      console.log('new Cart', thisCart);
+      //console.log('new Cart', thisCart);
     }
     getElements(element){
       const thisCart = this;
@@ -341,14 +341,14 @@
       thisCart.dom.wrapper = element;
 
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
-      console.log('toggle trigger is: ', thisCart.dom.toggleTrigger);
+      //console.log('toggle trigger is: ', thisCart.dom.toggleTrigger); I tak nie wykazuje w konsoli.
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
       thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
     }
   }
 
   const app = {
-    
+
     initData: function () {
       const thisApp = this;
 
@@ -374,7 +374,7 @@
     },
     initActions(){
       const thisCart = this;
-      thisCart.dom.toggleTrigger.aadEventListener("click", function(){
+      thisCart.dom.toggleTrigger.aadEventListener('click', function(){
         thisCart.dom.wapper.classList.toggle(classNames.cart.wrapperActive);
       });
     }
