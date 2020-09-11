@@ -333,6 +333,7 @@
       thisCart.getElements(element);
 
       //console.log('new Cart', thisCart);
+      thisCart.initActions();
     }
     getElements(element){
       const thisCart = this;
@@ -343,7 +344,7 @@
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       //console.log('toggle trigger is: ', thisCart.dom.toggleTrigger); I tak nie wykazuje w konsoli.
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
-      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+
     }
   }
 
