@@ -328,12 +328,12 @@
   class Cart{
     constructor(element){
       const thisCart = this;
+      //Products
       thisCart.products = [];
 
       thisCart.getElements(element);
-
-      //console.log('new Cart', thisCart);
       thisCart.initActions();
+      //console.log('new Cart', thisCart);
     }
     getElements(element){
       const thisCart = this;
