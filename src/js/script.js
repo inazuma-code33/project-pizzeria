@@ -85,7 +85,7 @@
     cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
     // CODE ADDED END
   };
-
+  
   class Product {
     constructor(id, data) {
       const thisProduct = this;
@@ -325,7 +325,30 @@
     }
   }
 
+  class Cart{
+    constructor(element){
+      const thisCart = this;
+      thisCart.products = [];
+
+      thisCart.getElements(element);
+
+      console.log('new Cart', thisCart);
+    }
+    getElements(element){
+      const thisCart = this;
+
+      thisCart.dom = {};
+      thisCart.dom.wrapper = element;
+
+      thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      console.log('toggle trigger is: ', thisCart.dom.toggleTrigger);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+    }
+  }
+
   const app = {
+    
     initData: function () {
       const thisApp = this;
 
@@ -343,7 +366,19 @@
       thisApp.initData();
       thisApp.initMenu();
     },
-  };
+    initCart: function(){
+      const thisApp = this;
 
+      const cartElem = document.querySelector(select.containerOf.cart);
+      thisApp.cart = new Cart(cartElem);
+    },
+    initActions(){
+      const thisCart = this;
+      thisCart.dom.toggleTrigger.aadEventListener("click", function(){
+        thisCart.dom.wapper.classList.toggle(classNames.cart.wrapperActive);
+      });
+    }
+  };
+ 
   app.init();
 }
