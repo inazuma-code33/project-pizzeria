@@ -344,7 +344,7 @@
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       //console.log('toggle trigger is: ', thisCart.dom.toggleTrigger); I tak nie wykazuje w konsoli.
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
-
+      
     }
     initActions(){
       const thisCart = this;
